@@ -35,7 +35,7 @@ func TestSendMessageHi(t *testing.T) {
 		t.Fatal(err)
 	}
 	req := gpt.NewRequest()
-	req.AddMessage(yandexgpt.YandexGPTRequestMessages{Role: yandexgpt.GPTRoleUser, Text: "Привет"})
+	req.AddMessage(yandexgpt.YandexGPTMessage{Role: yandexgpt.GPTRoleUser, Text: "Привет"})
 	resp, err := req.Do()
 	if err != nil {
 		t.Fatal(err)
@@ -53,7 +53,7 @@ func TestSendMessageStream(t *testing.T) {
 		t.Fatal(err)
 	}
 	req := gpt.NewRequest()
-	req.AddMessage(yandexgpt.YandexGPTRequestMessages{Role: yandexgpt.GPTRoleUser, Text: "как ты можешь помочь как голосовой ассистент?"})
+	req.AddMessage(yandexgpt.YandexGPTMessage{Role: yandexgpt.GPTRoleUser, Text: "как ты можешь помочь как голосовой ассистент?"})
 	req.CompletionOptions.Stream = true
 	ch := make(chan yandexgpt.YandexGPTResponse, 2)
 	err = req.DoStream(ch)

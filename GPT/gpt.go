@@ -67,7 +67,7 @@ type YandexGPTRequestCompletionOptions struct {
 	MaxTokens    int64   `json:"maxTokens"`
 }
 
-type YandexGPTRequestMessages struct {
+type YandexGPTMessage struct {
 	Role GPTRole `json:"role"`
 	Text string  `json:"text"`
 }
@@ -75,7 +75,7 @@ type YandexGPTRequestMessages struct {
 type YandexGPTRequest struct {
 	ModelURI          string                            `json:"modelUri"`
 	CompletionOptions YandexGPTRequestCompletionOptions `json:"completionOptions"`
-	Messages          []YandexGPTRequestMessages        `json:"messages"`
+	Messages          []YandexGPTMessage                `json:"messages"`
 	ygpt              YandexGPT
 }
 
@@ -88,22 +88,17 @@ func (g *YandexGPT) NewRequest() *YandexGPTRequest {
 			Templerature: 0.3,
 			MaxTokens:    100,
 		},
-		Messages: []YandexGPTRequestMessages{},
+		Messages: []YandexGPTMessage{},
 		ygpt:     *g,
 	}
 }
 
-func (req *YandexGPTRequest) AddMessage(message YandexGPTRequestMessages) {
+func (req *YandexGPTRequest) AddMessage(message YandexGPTMessage) {
 	req.Messages = append(req.Messages, message)
 }
 
-func (req *YandexGPTRequest) AddMessages(messages []YandexGPTRequestMessages) {
+func (req *YandexGPTRequest) AddMessages(messages []YandexGPTMessage) {
 	req.Messages = append(req.Messages, messages...)
-}
-
-type YandexGPTResponseAlternativeMessage struct {
-	Role GPTRole `json:"role"`
-	Text string  `json:"text"`
 }
 
 /*
@@ -124,8 +119,8 @@ const (
 )
 
 type YandexGPTResponseAlternative struct {
-	Message YandexGPTResponseAlternativeMessage `json:"message"`
-	Status  YandexGPTResponseAlternativeStatus  `json:"status"`
+	Message YandexGPTMessage                   `json:"message"`
+	Status  YandexGPTResponseAlternativeStatus `json:"status"`
 }
 
 type YandexGPTResponseUsage struct {
