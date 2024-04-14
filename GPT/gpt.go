@@ -135,6 +135,12 @@ type YandexGPTResponse struct {
 		Usage        YandexGPTResponseUsage         `json:"usage"`
 		ModelVersion string                         `json:"modelVersion"`
 	} `json:"result"`
+	Error struct {
+		GrpcCode   int64  `json:"grpcCode"`
+		HTTPCode   int64  `json:"httpCode"`
+		Message    string `json:"message"`
+		HTTPStatus string `json:"httpStatus"`
+	} `json:"error"`
 	StatusCode int
 }
 
