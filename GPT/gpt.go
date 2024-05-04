@@ -163,7 +163,7 @@ func (req *YandexGPTRequest) Do() (*YandexGPTResponse, error) {
 	if os.Getenv("TLS") == "0" {
 		client.Transport = &http.Transport{
 			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: false,
+				InsecureSkipVerify: true,
 			},
 		}
 	}
