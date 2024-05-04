@@ -3,11 +3,13 @@ package yandexgpt
 import (
 	"bufio"
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
 var (
@@ -158,6 +160,13 @@ func (req *YandexGPTRequest) Do() (*YandexGPTResponse, error) {
 	request.Header.Set("Authorization", fmt.Sprintf("Api-Key %s", req.ygpt.apiKey))
 
 	client := &http.Client{}
+	if os.Getenv("TLS") == "0" {
+		client.Transport = &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: false,
+			},
+		}
+	}
 	response, err := client.Do(request)
 	if err != nil {
 		return nil, err
